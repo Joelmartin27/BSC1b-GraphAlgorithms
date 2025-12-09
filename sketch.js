@@ -14,5 +14,5 @@ function draw() {
 }
 
 function mouseClicked() {
-  graph.addNode(mouseX, mouseY);
+  graph.onClick(mouseX, mouseY);
 }
