@@ -12,6 +12,21 @@ class Graph {
    * @param {Number} y 
    */
   onClick(x, y) {
+
+    // if coordinates are out of bounds -> stop function
+    if(this.#outOfBOunds(x, y)){
+      console.log("out of bounds");
+      return;
+
+    } 
+
+    // if coordiantes are too close to border -> stop function
+    if(this.#nearBorder(x, y)){
+      console.log("too close to border -> not adding node");
+      return;
+    }
+
+    this.nodes.push({x, y});
   }
 
   /**
@@ -30,6 +45,20 @@ class Graph {
    * @return {boolean}
    */
   #outOfBOunds(x, y) {
+  
+
+
+
+    // x bounds
+    let outside = false;
+    if(x < 0) outside = true;
+    if(x > width) outside = true;
+
+    //  y bounds
+    if(y < 0) outside = true;
+    if(y > height) outside = true;
+
+    return outside;
   }
 
 
@@ -39,8 +68,22 @@ class Graph {
    * @param {Number} y 
    * @return {boolean}
    */
-  #insideNode(x, y) {
-  }
+  #nearBorder(x, y) {
+    let radius = nodeDiameter / 2;
+    // distance to each border
+    let distanceLeft = x;
+    let distanceTop = y;
+    let distanceRight = width - x;
+    let distanceBottom = height - y;
+
+    // ?check whether any of border distances are smaller than radius
+    let near = false;
+    if(distanceLeft < radius) near = true;
+    if(distanceTop < radius) near = true;
+    if(distanceRight < radius) near = true;
+    if(distanceBottom < radius) near = true;
+   }
+
 
 
   /**
@@ -56,6 +99,10 @@ class Graph {
    * draw all nodes that in canvas
    */
   #drawNodes() {
+    for(let node of this.nodes){
+      fill(100, 0, 200);
+      circle(node.x, node.y, nodeDiameter);
+    }
   }
 
   /**
