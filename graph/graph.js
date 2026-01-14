@@ -14,14 +14,14 @@ class Graph {
   onClick(x, y) {
 
     // if coordinates are out of bounds -> stop function
-    if(this.#outOfBOunds(x, y)){
+    if(outOfBOunds(x, y)){
       console.log("out of bounds");
       return;
 
     } 
 
     // if coordiantes are too close to border -> stop function
-    if(this.#nearBorder(x, y)){
+    if(nearBorder(x, y)){
       console.log("too close to border -> not adding node");
       return; 
     }
@@ -72,52 +72,10 @@ class Graph {
   }
 
   // =================== Drawing Functions ===================
-  /**
-   * Check if (x, y) is outside canvas bounds
-   * @param {Number} x 
-   * @param {Number} y 
-   * @return {boolean}
-   */
-  #outOfBOunds(x, y) {
   
 
 
-
-    // x bounds
-    let outside = false;
-    if(x < 0) outside = true;
-    if(x > width) outside = true;
-
-    //  y bounds
-    if(y < 0) outside = true;
-    if(y > height) outside = true;
-
-    return outside;
-  }
-
-
-  /**
-   * Check if (x, y) is inside another node
-   * @param {Number} x 
-   * @param {Number} y 
-   * @return {boolean}
-   */
-  #nearBorder(x, y) {
-    let radius = nodeDiameter / 2;
-    // distance to each border
-    let distanceLeft = x;
-    let distanceTop = y;
-    let distanceRight = width - x;
-    let distanceBottom = height - y;
-
-    // ?check whether any of border distances are smaller than radius
-    let near = false;
-    if(distanceLeft < radius) near = true;
-    if(distanceTop < radius) near = true;
-    if(distanceRight < radius) near = true;
-    if(distanceBottom < radius) near = true;
-    return near;
-   }
+  
 
    #insideNode(x,y) {
 
