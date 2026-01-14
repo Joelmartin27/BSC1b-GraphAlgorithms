@@ -13,13 +13,34 @@
     <script src="graph/graph.js"></script>
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
+    <script src="sketch.js" defer></script>
   </head>
 
   <body>
     <div id="h1container">
       <h1>Graph Builder</h1>
     </div>
-    <script src="sketch.js"></script>
-    <main></main>
+
+    <div id="mainContainer">
+
+      <!-- info display -->
+       <div id="infoContainer">
+        <h4>Graph Properties</h4>
+
+       <p>This graph is <spam id="completeSpan">not</spam>complete</p>
+
+       <hr/>
+
+       <!-- selected node properties -->
+        <h4>Selected Node Properties</h4>
+
+        <p>Selected Node Degree: <spam id="degreeSpan"></spam></p>
+
+       </div>
+       <!-- main Canvas -->
+      <main></main>
+    </div>
+
+
   </body>
 </html>

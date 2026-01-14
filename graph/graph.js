@@ -71,6 +71,31 @@ class Graph {
     this.#drawEdges();
   }
 
+  /**
+   * A graph is complete when all nodes are connected to each other
+   *  i.e when all nodes have n - 1 neighbours, where n = number of nodes
+   * @returns true if graph is complete, false otherwise
+   */
+  isComplete() {
+    for(let node of this.nodes) {
+      if(node.neighbours.length != this.nodes.length - 1) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  /**
+   * @returns -1 if no selected node or number of neighbours if a node is selected
+   */
+  getSelectedNodeDegree(){
+    if(this.#currentId === -1) return false;
+
+    // get selected node and return degree
+    let selectedNode = this.nodes[this.#currentId];
+    return selectedNode.neighbours.length;
+  }
+
   // =================== Drawing Functions ===================
   
 
