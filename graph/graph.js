@@ -35,8 +35,6 @@ class Graph {
       if(this.#currentId != -1) {
         const insideNodeId = this.nodes.indexOf(insideNode);
 
-
-
         if(this.#currentId === insideNodeId) {
           this.#deselectNode();
           return;
@@ -58,7 +56,11 @@ class Graph {
 
     // deselect any node
     this.#deselectNode();
-    this.nodes.push({x, y});
+
+    // create a node objects
+    let newNode = new Node(x, y, this.nodes.length);
+
+    this.nodes.push(newNode);
   }
 
   /**
@@ -163,10 +165,9 @@ class Graph {
    */
   #drawEdges() {
     for(let node of this.nodes) {
-      if(node.neighbour) {
-        let neighbourNode = this.nodes[node.neighbour];
-        line(node.x, node.y, neighbourNode.x, neighbourNode.y);
-        console.log("neighbour detected");
+      for(let neighbourId of node.neighbours) {
+        let neighbour = this.nodes[neighbourId];
+        line(node.x, node.y, neighbour.x, neighbour.y)
       }
     }
   }
@@ -180,9 +181,15 @@ class Graph {
    * @param {Numbers} nodeTwoPosition
    */
   #addEdge(nodeOnePosition, nodeTwoPosition) {
-    this.nodes[nodeOnePosition].neighbour = nodeTwoPosition;
-    this.nodes[nodeTwoPosition].neighbour = nodeOnePosition;
-    
+
+    // get node objects
+    let nodeOne = this.nodes[nodeOnePosition];
+    let nodeTwo = this.nodes[nodeTwoPosition];
+
+    // add neighbours
+    nodeOne.addNeighbour(nodeTwoPosition);
+    nodeTwo.addNeighbour(nodeOnePosition);
+
   }
 
   /**

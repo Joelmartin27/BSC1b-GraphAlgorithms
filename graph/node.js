@@ -10,4 +10,18 @@ class Node {
     this.y = y;
     this.id = id;
   }
+
+  addNeighbour(neighbourId) {
+    // check if neighbour already exists
+    if(this.neighbours.includes(neighbourId)) {
+      let neighbourIndex = this.neighbours.indexOf(neighbourId);
+
+      // remove neighbour
+      this.neighbours.splice(neighbourIndex, 1);
+
+      return;
+    }
+
+    this.neighbours.push(neighbourId);
+  }
 }
