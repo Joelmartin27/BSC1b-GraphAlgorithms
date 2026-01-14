@@ -30,9 +30,18 @@ class Graph {
     let insideNode = this.#insideNode(x, y);
     if(insideNode) {
 
+      console.log("current id: ", this.#currentId);
+
       if(this.#currentId != -1) {
         const insideNodeId = this.nodes.indexOf(insideNode);
-        this.#addEdge(this.#currentId, insideNode);
+
+
+
+        if(this.#currentId === insideNodeId) {
+          this.#deselectNode();
+          return;
+        }
+        this.#addEdge(this.#currentId, insideNodeId);
         return;
       }
       console.log("inside preexisting node", insideNode, "not adding node");
@@ -40,11 +49,15 @@ class Graph {
       let selectedIndex = this.nodes.indexOf(insideNode);
       
       this.nodes[selectedIndex].selected = true;
-      this.currentId = selectedIndex; 
+      this.#currentId = selectedIndex; 
       return;
     }
+    // pushes them back
 
+    if(this.#overlappingNode(x, y)) return;
 
+    // deselect any node
+    this.#deselectNode();
     this.nodes.push({x, y});
   }
 
@@ -101,16 +114,18 @@ class Graph {
     if(distanceTop < radius) near = true;
     if(distanceRight < radius) near = true;
     if(distanceBottom < radius) near = true;
+    return near;
    }
 
    #insideNode(x,y) {
+
     let radius = nodeDiameter/2;
+
     for(let node of this.nodes) {
       if (squareDistance(x, y, node.x, node.y) < radius * radius){
         return node;
       }
     }
-
     return false;
    }
 
@@ -122,7 +137,12 @@ class Graph {
    * @param {Number} y 
    * @return {boolean}
    */
+
   #overlappingNode(x, y) {
+    for(let node of this.nodes) {
+      if(squareDistance(x, y, node.x, node.y) < nodeDiameter ** 2) return node;
+    }
+    return false;
   }
 
   /**
@@ -172,6 +192,12 @@ class Graph {
    */
   #addNode(x, y) {
     
+  }
+
+  #deselectNode() {
+    if(this.#currentId == -1) return;
+    this.nodes[this.#currentId].selected = false;
+    this.#currentId = -1;
   }
 }
 
